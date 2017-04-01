@@ -7,10 +7,12 @@ import {
     ActivityIndicator
 } from 'react-native';
 
+import styles from '../constants/styles';
+
 export default class Loading extends Component {
     render() {
         return (
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <View style={styles.container}>
                 <ActivityIndicator
                     size="large"
                 />

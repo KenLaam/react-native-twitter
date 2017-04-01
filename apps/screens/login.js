@@ -20,13 +20,13 @@ const twitterConfig = {
 import {connect} from 'react-redux'
 import {twitter} from 'react-native-simple-auth';
 import Actions from '../redux/action';
-
+import styles from '../constants/styles';
 
 class Login extends Component {
 
     render() {
         return (
-            <View style={{flex: 1,justifyContent: 'center', alignItems: 'center'}}>
+            <View style={styles.container}>
                 <Button
                     title='Login'
                     onPress={this.props.loginTwitter.bind(this.props)}
@@ -49,11 +49,10 @@ const mapDispatchToProps = dispatch => ({
         twitter(twitterConfig)
             .then((info) => {
                 dispatch(Actions.updateAppStatus('LOADED'));
-                debugger
-                // dispatch(Actions.updateUserInfo(info.user));
-                // dispatch(Actions.updateUserCredentials(info.credentials));
+                dispatch(Actions.updateUser(info.user));
+                dispatch(Actions.updateCredentials(info.credentials));
             }).catch((error) => {
-            alert("Login failed!!!" + JSON.stringify(error));
+            alert("Login failed!!!");
             console.log("Error login " + JSON.stringify(error));
             dispatch(Actions.updateAppStatus('FAIL'));
         });

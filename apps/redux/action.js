@@ -1,28 +1,30 @@
 /**
  * Created by ken on 4/1/17.
  */
+import {Types} from '../constants/actions'
 
 const Actions = {
     updateAppStatus (appStatus) {
         return {
-            type: 'UPDATE_APP_STATUS',
+            type: Types.APP_STATUS,
             appStatus
         }
     },
 
-    updateUserInfo (user) {
+    updateUser (user) {
         return {
-            type: 'UPDATE_USER_INFO',
+            type: Types.UPDATE_USER,
             user
         }
     },
 
-    updateUserCredentials (credentials) {
+    updateCredentials (credentials) {
         return {
-            type: 'UPDATE_USER_CREDENTIALS',
+            type: Types.UPDATE_CREDENTIALS,
             credentials
         }
     },
+
 }
 
 export default Actions

@@ -3,39 +3,39 @@
  */
 import {combineReducers} from 'redux'
 import ImmutableJS from 'immutable'
+import {Types} from '../constants/actions'
 
-const appStatusReducer = (state = 'INIT', action) => {
+const appStatusReducer = (state = '', action) => {
     switch (action.type) {
-        case 'UPDATE_APP_STATUS':
+        case Types.APP_STATUS:
             return action.appStatus
         default:
             return state
     }
 }
 
-const userInfoReducer = (state = ImmutableJS.fromJS({}), action) => {
+const userReducer = (state = ImmutableJS.fromJS({}), action) => {
     switch (action.type) {
-        case 'UPDATE_USER':
+        case Types.UPDATE_USER:
             return ImmutableJS.fromJS(action.user)
         default:
             return state
     }
 }
 
-const userCredentialsReducer = (state = ImmutableJS.fromJS({}), action) => {
+const credentialsReducer = (state = ImmutableJS.fromJS({}), action) => {
     switch (action.type) {
-        case 'UPDATE_USER_CREDENTIALS':
-            return ImmutableJS.fromJS(action.accessToken)
+        case Types.UPDATE_CREDENTIALS:
+            return ImmutableJS.fromJS(action.credentials)
         default:
             return state
     }
 }
 
-
 const reducer = combineReducers({
     appStatus: appStatusReducer,
-    userInfo: userInfoReducer,
-    userCredentials: userCredentialsReducer,
+    user: userReducer,
+    credentials: credentialsReducer,
 })
 
 
