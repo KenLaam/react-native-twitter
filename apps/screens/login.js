@@ -7,7 +7,8 @@ import {
     StyleSheet,
     Text,
     View,
-    Button
+    TouchableOpacity,
+    Image,
 } from 'react-native';
 
 import {connect} from 'react-redux'
@@ -20,12 +21,17 @@ class Login extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Button
-                    title='Login'
-                    onPress={this.props.loginTwitter.bind(this.props)}
+            <TouchableOpacity
+                style={styles.container}
+                onPress={this.props.loginTwitter}
+            >
+                <Image
+                    style={{width: 200, height: 200}}
+                    source={require('../resources/twitter_bg.png')}
                 />
-            </View>
+
+                <Text style={{color: "#4BA6ED", fontSize: 20, fontWeight: 'bold'}}>Login</Text>
+            </TouchableOpacity>
         )
     }
 }
