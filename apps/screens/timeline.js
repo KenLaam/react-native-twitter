@@ -3,18 +3,22 @@
  */
 import React, {Component} from 'react';
 import {
+    StyleSheet,
     Text,
     View,
     Button,
     ListView,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from 'react-native';
 
 import {connect} from 'react-redux';
+import {Drawer} from 'native-base';
 import {getHeaders} from 'react-native-simple-auth/lib/utils/oauth1';
 import {TwitterConfig} from '../constants/config';
 import Actions from '../redux/action';
 import FeedCell from '../component/feedCell'
+import SideBar from './side_menu';
 
 class Timeline extends Component {
     constructor() {
@@ -22,7 +26,8 @@ class Timeline extends Component {
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
         this.state = {
             refreshing: false,
-            ds
+            ds,
+            drawerOpen: false,
         }
     }
 
@@ -39,6 +44,14 @@ class Timeline extends Component {
         )
     }
 
+    static toggleDrawer = () => {
+        if (this.state.drawerOpen) {
+            this._drawer.close();
+        } else {
+            this._drawer.open();
+        }
+    }
+
     static navigationOptions = {
         header: (prop) => ({
             title: 'Home',
@@ -47,6 +60,7 @@ class Timeline extends Component {
                     <TouchableOpacity
                     >
                         <Image
+                            style={{width: 16, height: 16, margin: 8}}
                             source={require('../resources/ic_menu.png')}
                         />
                     </TouchableOpacity>
@@ -62,17 +76,35 @@ class Timeline extends Component {
         }
         const dataSource = this.state.ds.cloneWithRows(feeds);
         return (
-            <View>
+            <Drawer
+                type="overlay"
+                content={<SideBar/>}
+                open={true}
+                tapToClose={true}
+                ref={(ref) => this._drawer = ref}
+                openDrawerOffset={0.5}
+                panCloseMask={0.5}
+                panOpenMask={0.95}
+                onOpenStart={()=> this.setState({drawerOpen: true})}
+                onCloseStart={()=> this.setState({drawerOpen: false})}
+            >
                 <ListView
                     enableEmptySections={true}
                     dataSource={dataSource}
                     renderRow={this.renderRow}
                 />
-            </View>
+            </Drawer>
         )
     }
 }
 
+const styles = StyleSheet.create({
+    drawer: {
+        shadowColor: '#000000',
+        shadowOpacity: 0.3,
+        shadowRadius: 15
+    }
+})
 
 const mapStateToProps = state => ({...state})
 

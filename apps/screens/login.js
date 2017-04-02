@@ -29,8 +29,6 @@ class Login extends Component {
                     style={{width: 200, height: 200}}
                     source={require('../resources/twitter_bg.png')}
                 />
-
-                <Text style={{color: "#4BA6ED", fontSize: 20, fontWeight: 'bold'}}>Login</Text>
             </TouchableOpacity>
         )
     }
