@@ -7,7 +7,8 @@ import {
     Text,
     View,
     Button,
-    TouchableOpacity
+    TouchableOpacity,
+    Animated,
 } from 'react-native';
 
 import Image from 'react-native-image-progress';
@@ -17,17 +18,52 @@ import moment from 'moment';
 const ic_verified = require('../resources/ic_verified.png');
 const ic_favorited = require('../resources/ic_favorited.png');
 const ic_unfavorite = require('../resources/ic_unfavorite.png');
+const anim_favorite = require('../resources/anim_favorite.gif');
 const ic_retweet = require('../resources/ic_retweet.png');
 const ic_unretweet = require('../resources/ic_unretweet.png');
 
 export default class FeedCell extends Component {
+    constructor(props) {
+        super(props)
+        const {feed} = props;
+        this.state = {
+            feed: feed,
+            favIcon: feed.favorited ? ic_favorited : ic_unfavorite,
+            retweetIcon: feed.retweeted ? ic_retweet : ic_unretweet,
+            bounceValue: new Animated.Value(1),
+        }
+    }
 
     retweedFeed = () => {
         alert("retweetFeed")
     }
 
     favoriteFeed = () => {
-        alert("favoriteFeed")
+        if (!this.state.feed.favorited) {
+            this.setState({
+                favIcon: anim_favorite,
+            })
+
+            this.state.bounceValue.setValue(2);
+            Animated.spring(
+                this.state.bounceValue,
+                {
+                    toValue: 1,
+                    friction: 1,
+                }
+            ).start();
+
+            setTimeout(() => {
+                this.setState({
+                    favIcon: ic_favorited,
+                })
+            }, 1000)
+
+        }
+    }
+
+    userDetail = () => {
+        this.props.navigation.navigate('User', {user: 'Trump'})
     }
 
 
@@ -43,17 +79,21 @@ export default class FeedCell extends Component {
                     indicator={ProgressBar}
                 />
                 <View>
-                    <View
-                        style={styles.row}
+                    <TouchableOpacity
+                        onPress={this.userDetail}
                     >
-                        <Text style={styles.name}>{feed.user.name}</Text>
-                        {feed.user.verified ?
-                            <Image
-                                style={styles.icon}
-                                source={ic_verified}
-                            /> : null}
-                    </View>
-                    <Text style={styles.screen_name}>@{feed.user.screen_name}</Text>
+                        <View
+                            style={styles.row}
+                        >
+                            <Text style={styles.name}>{feed.user.name}</Text>
+                            {feed.user.verified ?
+                                <Image
+                                    style={styles.icon}
+                                    source={ic_verified}
+                                /> : null}
+                        </View>
+                        <Text style={styles.screen_name}>@{feed.user.screen_name}</Text>
+                    </TouchableOpacity>
                     <Text
                         style={styles.screen_name}>{moment(feed.created_at, "ddd MMM DD HH:mm:ss Z YYYY").fromNow()}</Text>
                     <Text> {feed.text}</Text>
@@ -65,7 +105,7 @@ export default class FeedCell extends Component {
                         >
                             <Image
                                 style={styles.icon}
-                                source={feed.retweeted? ic_retweet: ic_unretweet}
+                                source={this.state.retweetIcon}
                             />
                         </TouchableOpacity>
                         <Text>{feed.retweet_count}</Text>
@@ -73,9 +113,12 @@ export default class FeedCell extends Component {
                         <TouchableOpacity
                             onPress={this.favoriteFeed}
                         >
-                            <Image
-                                style={styles.icon}
-                                source={feed.favorited? ic_favorited: ic_unfavorite}
+
+                            <Animated.Image
+                                style={[styles.icon,
+                                {transform: [{scale: this.state.bounceValue}]}
+                                ]}
+                                source={this.state.favIcon}
                             />
                         </TouchableOpacity>
                         <Text>{feed.favorite_count}</Text>
@@ -116,8 +159,9 @@ const styles = StyleSheet.create({
     },
 
     icon: {
-        width: 16,
-        height: 16,
-    }
+        width: 30,
+        height: 30,
+    },
+
 
 })

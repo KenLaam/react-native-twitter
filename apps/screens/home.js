@@ -10,50 +10,19 @@ import {
 } from 'react-native';
 
 import {connect} from 'react-redux';
-import styles from '../constants/styles';
-import {getHeaders} from 'react-native-simple-auth/lib/utils/oauth1';
-import {TwitterConfig} from '../constants/config';
-import Actions from '../redux/action';
-import FeedCell from '../component/feedCell'
-import {Drawer} from 'native-base';
+import {StackNavigator} from 'react-navigation'
+import Timeline from './timeline';
+import User from './user';
+
+const AppStack = StackNavigator({
+    Timeline: {screen: Timeline},
+    User: {screen: User},
+})
 
 class Home extends Component {
-    constructor() {
-        super()
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-        this.state = {
-            refreshing: false,
-            ds
-        }
-    }
-
-    componentWillMount() {
-        this.props.fetchTimeLine()
-    }
-
-    renderRow = (feed) => {
-        if (!feed) {
-            return <View/>
-        }
-        return (
-            <FeedCell feed={feed}/>
-        )
-    }
-
     render() {
-        let feeds = this.props.feeds;
-        if (!feeds) {
-            feeds = []
-        }
-        const dataSource = this.state.ds.cloneWithRows(feeds);
         return (
-            <View>
-                <ListView
-                    enableEmptySections={true}
-                    dataSource={dataSource}
-                    renderRow={this.renderRow}
-                />
-            </View>
+            <AppStack/>
         )
     }
 }
@@ -63,22 +32,4 @@ const mapStateToProps = state => ({...state})
 
 const mapDispatchToProps = dispatch => ({dispatch})
 
-const mergeProps = (stateProps, dispatchProps) => ({
-    ...stateProps,
-    ...dispatchProps,
-    async fetchTimeLine () {
-        const httpMethod = 'GET';
-        const url = 'https://api.twitter.com/1.1/statuses/home_timeline.json';
-        const headers = getHeaders(url, {}, {}, TwitterConfig.appId, TwitterConfig.appSecret, httpMethod, stateProps.credentials.oauth_token, stateProps.credentials.oauth_token_secret);
-
-        const response = await fetch(url, {
-            method: httpMethod,
-            headers,
-        });
-        const json = await response.json();
-        dispatchProps.dispatch(Actions.updateHomeTimeline(json))
-        console.log('user_timeline', JSON.stringify(json[0]));
-    },
-})
-
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
