@@ -10,15 +10,16 @@ import {connect} from 'react-redux'
 import Login from './screens/login';
 import Home from './screens/home';
 import Loading from './screens/loading';
+import {AppStatus} from  './constants/config';
 
 
 class App extends Component {
 
     renderScene() {
         switch (this.props.appStatus) {
-            case 'LOADING':
+            case AppStatus.LOADING:
                 return <Loading/>
-            case 'LOADED':
+            case AppStatus.IS_LOGGED:
                 return <Home/>
             default:
                 return <Login/>

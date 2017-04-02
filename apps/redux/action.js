@@ -1,29 +1,36 @@
 /**
  * Created by ken on 4/1/17.
  */
-import {Types} from '../constants/actions'
+import {ActionTypes} from '../constants/config'
 
 const Actions = {
     updateAppStatus (appStatus) {
         return {
-            type: Types.APP_STATUS,
+            type: ActionTypes.UPDATE_APP_STATUS,
             appStatus
         }
     },
 
     updateUser (user) {
         return {
-            type: Types.UPDATE_USER,
+            type: ActionTypes.UPDATE_USER,
             user
         }
     },
 
     updateCredentials (credentials) {
         return {
-            type: Types.UPDATE_CREDENTIALS,
+            type: ActionTypes.UPDATE_CREDENTIALS,
             credentials
         }
     },
+
+    updateHomeTimeline (feeds) {
+        return {
+            type: ActionTypes.UPDATE_LIST_TIMELINE,
+            feeds
+        }
+    }
 
 }
 

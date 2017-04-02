@@ -3,32 +3,41 @@
  */
 import {combineReducers} from 'redux'
 import ImmutableJS from 'immutable'
-import {Types} from '../constants/actions'
+import {ActionTypes} from '../constants/config'
 
 const appStatusReducer = (state = '', action) => {
     switch (action.type) {
-        case Types.APP_STATUS:
-            return action.appStatus
+        case ActionTypes.UPDATE_APP_STATUS:
+            return action.appStatus;
         default:
-            return state
+            return state;
     }
 }
 
 const userReducer = (state = ImmutableJS.fromJS({}), action) => {
     switch (action.type) {
-        case Types.UPDATE_USER:
-            return ImmutableJS.fromJS(action.user)
+        case ActionTypes.UPDATE_USER:
+            return action.user;
         default:
-            return state
+            return state;
     }
 }
 
 const credentialsReducer = (state = ImmutableJS.fromJS({}), action) => {
     switch (action.type) {
-        case Types.UPDATE_CREDENTIALS:
-            return ImmutableJS.fromJS(action.credentials)
+        case ActionTypes.UPDATE_CREDENTIALS:
+            return action.credentials;
         default:
-            return state
+            return state;
+    }
+}
+
+const homeTimelineReducer = (state = ImmutableJS.fromJS({}), action) => {
+    switch (action.type) {
+        case ActionTypes.UPDATE_LIST_TIMELINE:
+            return action.feeds;
+        default:
+            return state;
     }
 }
 
@@ -36,6 +45,7 @@ const reducer = combineReducers({
     appStatus: appStatusReducer,
     user: userReducer,
     credentials: credentialsReducer,
+    feeds: homeTimelineReducer,
 })
 
 
