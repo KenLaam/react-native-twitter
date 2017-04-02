@@ -7,8 +7,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "moment": "^2.18.1",
+    "native-base": "^2.1.0",
     "react": "~15.4.1",
     "react-native": "0.42.3",
+    "react-native-image-progress": "^0.6.0",
+    "react-native-progress": "^3.2.0",
     "react-native-simple-auth": "^2.0.1",
     "react-redux": "^5.0.3",
     "redux": "^3.6.0",

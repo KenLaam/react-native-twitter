@@ -10,12 +10,6 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
 
-    feed: {
-        marginBottom: 8,
-        marginTop: 8,
-    }
-
-
 })
 
 export default styles

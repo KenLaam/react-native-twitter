@@ -15,6 +15,7 @@ import {getHeaders} from 'react-native-simple-auth/lib/utils/oauth1';
 import {TwitterConfig} from '../constants/config';
 import Actions from '../redux/action';
 import FeedCell from '../component/feedCell'
+import {Drawer} from 'native-base';
 
 class Home extends Component {
     constructor() {
@@ -31,7 +32,10 @@ class Home extends Component {
     }
 
     renderRow = (feed) => {
-        return(
+        if (!feed) {
+            return <View/>
+        }
+        return (
             <FeedCell feed={feed}/>
         )
     }
@@ -43,11 +47,13 @@ class Home extends Component {
         }
         const dataSource = this.state.ds.cloneWithRows(feeds);
         return (
-            <ListView
-                enableEmptySections={true}
-                dataSource={dataSource}
-                renderRow={this.renderRow}
-            />
+            <View>
+                <ListView
+                    enableEmptySections={true}
+                    dataSource={dataSource}
+                    renderRow={this.renderRow}
+                />
+            </View>
         )
     }
 }
@@ -61,7 +67,6 @@ const mergeProps = (stateProps, dispatchProps) => ({
     ...stateProps,
     ...dispatchProps,
     async fetchTimeLine () {
-        console.log(stateProps.user.name);
         const httpMethod = 'GET';
         const url = 'https://api.twitter.com/1.1/statuses/home_timeline.json';
         const headers = getHeaders(url, {}, {}, TwitterConfig.appId, TwitterConfig.appSecret, httpMethod, stateProps.credentials.oauth_token, stateProps.credentials.oauth_token_secret);
@@ -72,7 +77,7 @@ const mergeProps = (stateProps, dispatchProps) => ({
         });
         const json = await response.json();
         dispatchProps.dispatch(Actions.updateHomeTimeline(json))
-        console.log('user_timeline', json);
+        console.log('user_timeline', JSON.stringify(json[0]));
     },
 })
 
