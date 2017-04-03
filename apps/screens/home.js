@@ -14,9 +14,10 @@ import {StackNavigator} from 'react-navigation'
 import Timeline from './timeline';
 import User from './user';
 
+
 const AppStack = StackNavigator({
-    User: {screen: User},
     Timeline: {screen: Timeline},
+    Profile: {screen: User},
 })
 
 class Home extends Component {

@@ -22,14 +22,6 @@ class User extends Component {
     static navigationOptions = {
         header: (prop) => ({
             title: 'Profile',
-            left: (
-                <View>
-                    <Button
-                        title="Back"
-                        onPress={() => alert("Back")}
-                    />
-                </View>
-            )
         }),
     }
 

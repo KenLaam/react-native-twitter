@@ -10,12 +10,12 @@ The following **required** functionality is completed:
    - [x] Dragging anywhere in the view should reveal the menu.
    - [x] The menu should include links to your profile, the home timeline, and the mentions view.
    - [x] The menu can look similar to the example or feel free to take liberty with the UI.
-- [ ] Profile page
-   - [ ] Contains the user header view
-   - [ ] Contains a section with the users basic stats: # tweets, # following, # followers
+- [x] Profile page
+   - [x] Contains the user header view
+   - [x] Contains a section with the users basic stats: # tweets, # following, # followers
 - [ ] Home Timeline
    - [ ] Tapping on a user image should bring up that user's profile page
-- [ ] Like, tape heart icon to like and unlike
+- [x] Like, tape heart icon to like and unlike
   - **Hint** Gif heart image (https://giphy.com/gifs/twitter-10shHccb7Xfn2g)
 
 The following **optional** features are implemented:

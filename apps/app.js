@@ -14,7 +14,6 @@ import {AppStatus} from  './constants/config';
 
 
 class App extends Component {
-
     renderScene() {
         switch (this.props.appStatus) {
             case AppStatus.LOADING:
