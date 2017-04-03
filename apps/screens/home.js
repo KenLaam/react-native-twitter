@@ -15,8 +15,8 @@ import Timeline from './timeline';
 import User from './user';
 
 const AppStack = StackNavigator({
-    Timeline: {screen: Timeline},
     User: {screen: User},
+    Timeline: {screen: Timeline},
 })
 
 class Home extends Component {

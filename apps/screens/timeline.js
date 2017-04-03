@@ -79,11 +79,10 @@ class Timeline extends Component {
             <Drawer
                 type="overlay"
                 content={<SideBar/>}
-                open={true}
                 tapToClose={true}
                 ref={(ref) => this._drawer = ref}
-                openDrawerOffset={0.5}
-                panCloseMask={0.5}
+                openDrawerOffset={0.4}
+                panCloseMask={0.4}
                 panOpenMask={0.95}
                 onOpenStart={()=> this.setState({drawerOpen: true})}
                 onCloseStart={()=> this.setState({drawerOpen: false})}
